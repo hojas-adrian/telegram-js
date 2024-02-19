@@ -19,6 +19,8 @@ pids
 *.launch
 .settings/
 *.sublime-workspace
+.playground
+scc.exe
 
 # IDE - VSCode
 .vscode/*

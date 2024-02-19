@@ -1,5 +1,11 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --allow-env --allow-read --watch --env poll.js"
+    "dev": "deno run --allow-net --allow-env --allow-read --watch --env poll.js",
+    "test": "deno test --allow-env --watch"
+  },
+  "test": {
+    "include": [
+      "src/helpers/utils_test.spec.js"
+    ]
   }
 }
