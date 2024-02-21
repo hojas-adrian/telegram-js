@@ -350,6 +350,108 @@ const parse = (data: any): any => {
 export const sandBox = (code: () => void) => {
   let output = "";
 
+  //deno-lint-ignore no-explicit-any
+  const parse = (data: any): any => {
+    const outputObj: string[] = [];
+
+    if (data === null) {
+      return "null";
+    }
+
+    switch (typeof data) {
+      case "string":
+        return `'${data}'`;
+      case "symbol":
+        return `Symbol(${data.description})`;
+      case "bigint":
+        return `${data}n`;
+      case "function":
+        return `[Function${
+          data.name === "" || data.name === ""
+            ? " (anonymous)"
+            : `: ${data.name}`
+        }]${
+          data.name === "Error"
+            ? ` { stackTraceLimit: ${data.stackTraceLimit} }`
+            : ""
+        }`;
+
+      case "object":
+        if (data instanceof Array) {
+          data.forEach((el) => {
+            outputObj.push(parse(el));
+          });
+          return `[ ${outputObj.join(", ")} ]`;
+        }
+
+        if (data instanceof Map) {
+          const outputObj = [...data.keys()].map(
+            (el) => `'${el}' => '${data.get(el)}'`,
+          );
+
+          return `Map(${data.size}) { ${outputObj.join(", ")} }`;
+        }
+
+        for (const key in data) {
+          outputObj.push(`${key}: ${`${parse(data[key])}`}`);
+        }
+
+        if (data instanceof Set) {
+          const output = [...data.keys()];
+          return `Set(${data.size}) { ${output.join(", ")} }`;
+        }
+        if (data instanceof Date) {
+          return `${data.getFullYear()}-${
+            formatNumber(
+              data.getMonth() + 1,
+            )
+          }-${formatNumber(data.getDate())}T${
+            formatNumber(data.getUTCHours())
+          }:${
+            formatNumber(
+              data.getUTCMinutes(),
+            )
+          }:${formatNumber(data.getUTCSeconds())}.${data.getMilliseconds()}Z`;
+        }
+
+        if (data instanceof String) {
+          return `[String: ${data}]`;
+        }
+        if (data instanceof Number) {
+          return `[Number: ${data}]`;
+        }
+
+        if (data instanceof Promise) {
+          return "Promise {\n  <pending>,\n  [Symbol(async_id_symbol)]: 2642,\n  [Symbol(trigger_async_id_symbol)]: 6\n}";
+        }
+
+        if (data instanceof Boolean) {
+          return `[Boolean: ${data}]`;
+        }
+
+        if (data instanceof RegExp) {
+          return data;
+        }
+
+        if (data instanceof Error) {
+          return `Error: ${data.message}${data.stack}`;
+        }
+
+        if (data === Intl) {
+          return "Object [Intl] {}";
+        }
+
+        if (data === Math) {
+          return "Object [Math] {}";
+        }
+
+        return `{ ${outputObj.join(", ")} }`;
+
+      default:
+        return `${data}`;
+    }
+  };
+
   console.log = (...data) => {
     output += `${data.map(parse).join(" ")}\n`;
   };
