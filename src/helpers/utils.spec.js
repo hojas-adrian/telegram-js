@@ -13,7 +13,7 @@ import {
   getReturn,
   sandBox,
   RunnerError,
-} from "./utils.js";
+} from "./utils.ts";
 
 Deno.test("filterCommands", async (t) => {
   await t.step("return a array", () => {
