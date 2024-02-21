@@ -142,15 +142,15 @@ export const getReturn = (code: string, i = 0): string | undefined => {
 
       const val = ev(code);
 
-      if (val !== undefined) {
+      if (val !== "undefined") {
         return parse(val);
       }
     };
 
     const val = inlineReturn(clsplitted, 0);
 
-    if (val !== undefined) {
-      return parse(val);
+    if (val !== "undefined") {
+      return val;
     }
   }
 
@@ -158,7 +158,7 @@ export const getReturn = (code: string, i = 0): string | undefined => {
 
   const val = parse(ev(innerCode));
 
-  if (val !== undefined) {
+  if (val !== "undefined") {
     return val;
   }
 
