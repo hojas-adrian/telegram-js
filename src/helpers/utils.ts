@@ -52,6 +52,9 @@ export const filterEntities = (
 export const setDescription = (botName: string) =>
   `${botName} ${DATA.description}`;
 
+export const parseMessage = (message: string) =>
+  message.replace("<", "&lt;").replace(">", "&gt;");
+
 export const showBotError = (errorDescription: string) =>
   `BotError: ${errorDescription}`;
 
@@ -485,9 +488,14 @@ export const sendLog = async (
       formatNumber(time.minutes)
     }</code>`;
 
-  const replyMessageId = await sendMessage(ctx, to, message);
+  const replyMessageId = await sendMessage(ctx, to, parseMessage(message));
 
-  await sendMessage(ctx, to, logUserMessage, replyMessageId.message_id);
+  await sendMessage(
+    ctx,
+    to,
+    logUserMessage,
+    replyMessageId.message_id,
+  );
 };
 
 export const reply = async (
