@@ -34,7 +34,7 @@ export const DATA = {
       .join("\n")
   }</blockquote>`,
   joinUs:
-    "If you are looking for a place to stay updated in the world of JavaScript and TypeScript, join our community @JS_telegram.",
+    "If you are looking for a place to stay updated in the world of JavaScript and TypeScript, join our community @JS_TS_telegram.",
 };
 
 export const LANGUAGES = {
