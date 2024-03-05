@@ -4,7 +4,7 @@ export const CHANNEL_LOG = Deno.env.get("CHANNEL_LOG") as string;
 
 export const NOT_ALLOWED_SENTENCES = (Deno.env
   .get("NOT_ALLOWED_SENTENCES") as string)
-  .split(" ");
+  .split(" ").map((sentence) => new RegExp(sentence));
 
 export const ADMINS = (Deno.env.get("ADMINS") as string).split(" ");
 
