@@ -4,7 +4,7 @@ export const CHANNEL_LOG = Deno.env.get("CHANNEL_LOG") as string;
 
 export const NOT_ALLOWED_SENTENCES = (Deno.env
   .get("NOT_ALLOWED_SENTENCES") as string)
-  .split(" ").map((sentence) => new RegExp(sentence));
+  .split(" ").map((sentence) => new RegExp(`\\b${sentence}\\b`));
 
 export const ADMINS = (Deno.env.get("ADMINS") as string).split(" ");
 
@@ -46,7 +46,7 @@ export const ERRORS = {
   formatError:
     "The message does not contain executable code, or it is not properly formatted",
   langError: "The code is not JavaScript",
-  invalidSentence: "For security reasons, this code cannot be executed",
+  invalidSentence: '"For security reasons, this code cannot be executed"',
   toLongOutput: "The output message of the code is too long",
   uncaught: "Unknown error",
 };
